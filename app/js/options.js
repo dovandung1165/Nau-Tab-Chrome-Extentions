@@ -33,16 +33,14 @@ document.getElementById("wallpaper").addEventListener("click", closeSetting);
 //Lấy tất cả các phần tử con của Form
 const getFormSetting = Array.from(document.querySelector('#settings-panel').elements);
 let dataQuickLinks = [];
-
 // 	trueChecked	  : Các thẻ li được hiển thị trên nav bar
 const trueChecked = document.querySelectorAll('#quicklinks > li');
 
 //Gọi hàm kiểm tra //Truyền vào dataQuicklinks: mảng chứa các item đã qua check của user
-let getLocalStorageQuickLinks = JSON.parse(localStorage.getItem('dataQuickLinks'));
+let getLocalStorageQuickLinks = JSON.parse(localStorage.getItem('dataQuickLinks')) || [];
 //Get local storage + xử lý
 getTrueQuickLinks(getLocalStorageQuickLinks, trueChecked);
-
-document.querySelector('#settings-panel').addEventListener('change', () => {
+document.querySelector('#settings-panel').addEventListener('change', (event) => {
 	//Duyệt qua form
 	let dataOption = getFormSetting.reduce((data, input) => {
 		//radio
@@ -66,7 +64,7 @@ document.querySelector('#settings-panel').addEventListener('change', () => {
 	//Lấy tất cả các thẻ li của ul QuickLink hiện trên nav bar
 	//Sau mỗi lần xét và hiển thị đúng item Quicklinks => Xóa mảng để mảng chỉ chứa đúng số lượng item ban đầu
 	dataQuickLinks = [];
-	console.log('2');
+	// console.log('2');
 })
 //Change
 document.querySelector('#settings-panel').addEventListener('change', () => {
@@ -82,13 +80,14 @@ function getTrueQuickLinks(data, trueCheck) {
 	for (let i = 0; i < trueCheck.length; i++) {
 
 		//Không được check và hai id trùng nhau thì ẩn
-		if ((!data[i][1]) && ((data[i][0]) == trueCheck[i].id)) {
-			trueCheck[i].style.display = "none";
-		}
-		//Ngược lại thì hiện
-		else trueCheck[i].style.display = "block";
+		if(data.length > 0) {
+			if ((!data[i][1]) && ((data[i][0]) == trueCheck[i].id)) {
+				trueCheck[i].style.display = "none";
+			}
+			//Ngược lại thì hiện
+			else trueCheck[i].style.display = "block";
+		}	
 	}
-
 }
 
 

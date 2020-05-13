@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      font-size: 16px;
+    }
+
+    input,
+    textarea,
+    select,
+    button {
+      font-size: 16px;
+      padding: 0.5em;
+    }
+
+    .input-item {
+      display: block;
+      margin-bottom: 1em;
+    }
+  </style>
+
+</head>
+
+<body>
+  <form action="" id="form">
+    <label class="input-item">Username: <input type="text" name="username"></label>
+    <label class="input-item">Password: <input type="password" name="password"></label>
+    <div class="input-item">
+      Gender:
+      <label class=""><input type="radio" name="gender" value="male"> Male</label>
+      <label class=""><input type="radio" name="gender" value="female"> Female</label>
+      <label class=""><input type="radio" name="gender" value="other"> Other</label>
+    </div>
+    <label class="input-item">DOB: <input type="date" name="dob"></label>
+    <div class="input-item">
+      Residence:
+      <select name="residence" id="">
+        <option value="">-- Please select --</option>
+        <option value="hcm">TP.HCM</option>
+        <option value="hn">Hà Nội</option>
+        <option value="dn">Đà Nẵng</option>
+        <option value="ct">Cần Thơ</option>
+        <option value="hp">Hải Phòng</option>
+      </select>
+    </div>
+    <label class="input-item">
+      Your bio:
+      <textarea name="bio" cols="30" rows="3"></textarea>
+    </label>
+    <label class="input-item">Agree to tnc<input type="checkbox" name="tnc" value="agreed"></label>
+    <button type="reset">Reset</button>
+    <button>Save</button>
+  </form>
+  <script>
+    let  data = {};
+    let myForm = document.querySelector('#form');
+    myForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      data = Array.from(myForm.elements).reduce((data, input) => {
+        if (input.type === 'text') {
+          data[input.name] = input.value;
+        }
+        else if (input.type === 'password') {
+          data[input.name] = input.value;
+        }
+        else if (input.type === 'radio') {
+          data[input.name] = data[input.name] || (input.checked && input.value) || '';
+        }
+        else if (input.type === 'date') {
+          data[input.name] = input.value;
+        }
+        else if (input.name === 'residence') {
+          data[input.name] = input.value;
+        }
+        else if (input.name === 'bio') {
+          data[input.name] = input.value;
+        }
+        else if (input.type === 'checkbox') {
+          data[input.name] = (input.checked && input.value) || '';
+        }
+        else if (input.button === 'reset') {
+          data[input.name] = 'reset';
+        }
+        else if (input.button = 'submit') {
+          data[input.name] = 'submit';
+        }
+        return data;
+      }
+        , {});
+      console.log(data);
+    });
+
+  </script>
+  <script src="main.js"></script>
+</body>
+
+</html>
